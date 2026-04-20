@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>مدار السعادة - Intimacy</title>
+  <meta name="description" content="IntimacyWheel">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts (Cairo for Arabic support) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    /* ===== CUSTOM FONTS ===== */
+    @font-face {
+      font-family: 'Elektra';
+      src: url('Fonts/elektra.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Techno';
+      src: url('Fonts/techno.ttf') format('truetype');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #F9FAFE;
+      font-family: 'Cairo', sans-serif;
+      color: #1F2A48;
+    }
+
+    .brand-text, .app-name, h1 {
+      font-family: 'Cairo';
+    }
+
+    .techno-text {
+      font-family: 'Techno', 'Cairo', monospace;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* سيتم تعيين اللون الأساسي ديناميكياً */
+    .store-gradient-bg {
+      background: var(--accent-color, #D63384);
+    }
+
+    .btn-download-pro {
+      background: var(--accent-color, #D63384);
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .btn-download-pro:hover:not(:disabled) {
+      background: var(--accent-color-dark, #e05a00);
+      transform: scale(1.01);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+    .btn-download-pro:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .screenshot-store {
+      object-fit: cover;
+      width: 140px;
+      height: 280px;
+      border-radius: 1.25rem;
+      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+    }
+    .screenshot-store:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .description-pro {
+      color: #2C3E5C;
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+    .description-pro.collapsed {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      max-height: 4.8rem;
+    }
+
+    .toggle-pro-btn {
+      color: var(--accent-color, #D63384);
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
+    .lightbox-pro {
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .arrow-pro {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .social-store-section {
+      background: #FFFFFF;
+      border-radius: 60px;
+      padding: 0.6rem 1.6rem;
+      display: inline-flex;
+      gap: 1.5rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+      border: 1px solid #E9EDF2;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .social-icon-store {
+      transition: all 0.2s;
+      opacity: 0.75;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-icon-store img {
+      width: 36px;
+      height: 36px;
+      transition: 0.2s;
+    }
+    .social-icon-store:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+
+    .footer-pro {
+      background: transparent;
+      border-top: 1px solid #E2E8F0;
+      color: #5A6E8A;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+    }
+
+    .app-icon-store {
+      box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.2);
+      border-radius: 1.5rem;
+      background: #FFFFFF;
+    }
+    
+    h1 {
+      font-weight: 800;
+      background: linear-gradient(120deg, var(--accent-color, #D63384), var(--accent-color, #D63384));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 2rem;
+    }
+    /* toast notification */
+    .toast-notify {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1F2A48;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 10000;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      white-space: nowrap;
+    }
+    .toast-notify.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .progress-wrapper {
+      margin-top: 12px;
+      background: #E2E8F0;
+      border-radius: 40px;
+      height: 6px;
+      overflow: hidden;
+      width: 100%;
+      display: none;
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--accent-color, #D63384);
+      border-radius: 40px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top brand bar -->
+  <div class="store-gradient-bg text-white text-center py-3 shadow-sm relative">
+    <div class="flex items-center justify-center px-4 md:px-6 relative min-h-[56px]">
+      <span id="brandName" class="text-base md:text-3xl tracking-wider brand-text font-bold" style="font-family: 'Elektra', 'Cairo', sans-serif;">Bu-Xolthoum</span>
+    </div>
+  </div>
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-6 md:py-8">
+    
+    <!-- Hero + App Identity -->
+    <div class="premium-card p-6 md:p-8">
+      <div class="flex flex-row items-center justify-start gap-5">
+        <div class="flex-shrink-0">
+          <img id="appIcon" src="icon.png" alt="App Icon" class="w-28 h-28 rounded-2xl shadow-xl app-icon-store" loading="lazy">
+        </div>
+        <div>
+          <h1 id="appName" class="text-4xl font-extrabold app-name">مدار السعادة - Intimacy</h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description & Download CARD -->
+    <div class="premium-card p-6 mt-5">
+      <div class="flex items-start gap-2 mb-2">
+        <i class="fas fa-info-circle text-[var(--accent-color)] text-xl mt-1"></i>
+        <h2 id="aboutTitle" class="font-bold text-xl text-gray-800">نبذة عن التطبيق</h2>
+      </div>
+      <div class="text-right">
+        <p id="description" class="description-pro collapsed text-gray-700"></p>
+        <span id="toggleBtn" class="toggle-pro-btn mt-1 inline-flex items-center gap-1 cursor-pointer">
+          <i class="fas fa-chevron-down text-xs"></i> <span id="toggleBtnText">عرض المزيد</span>
+        </span>
+      </div>
+
+      <!-- Download area -->
+      <div class="mt-6 bg-gray-50 rounded-xl p-1.5">
+        <button id="downloadBtn" class="btn-download-pro w-full flex items-center justify-center gap-3 text-white font-bold py-3.5 rounded-xl transition text-base shadow-md">
+          <i class="fab fa-android text-xl"></i> <span id="downloadBtnText">تحميل التطبيق</span>
+        </button>
+        <div id="progressWrapper" class="progress-wrapper">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshots Gallery -->
+    <div class="mt-8">
+      <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-mobile-alt text-[var(--accent-color)] text-xl"></i>
+          <h3 id="galleryTitle" class="font-bold text-gray-800 text-lg">معاينة التطبيق</h3>
+        </div>
+        <span class="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full"><i class="fas fa-arrows-alt-h"></i> اسحب للمزيد</span>
+      </div>
+      <div id="screenshots-container" class="flex gap-4 overflow-x-auto scrollbar-hide pb-4" style="scroll-snap-type: x mandatory;"></div>
+    </div>
+
+    <!-- Social Media Section -->
+    <div class="flex justify-center mt-10">
+      <div id="socialLinksContainer" class="social-store-section"></div>
+    </div>
+    <div id="socialSectionTitle" class="text-center text-gray-400 text-xs mt-3"><i class="fas fa-globe"></i> تابعنا على منصات التواصل</div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 lightbox-pro hidden items-center justify-center z-[9999]" onclick="closeLightbox()">
+    <span class="absolute top-5 right-6 text-white text-3xl font-light cursor-pointer z-[10001] hover:text-cyan-300" onclick="closeLightbox()">&times;</span>
+    <button class="arrow-pro" style="right: 20px;" onclick="event.stopPropagation(); navigateImage(-1)"><i class="fas fa-chevron-right"></i></button>
+    <img id="lightbox-img" src="" alt="لقطة شاشة مكبرة" class="max-w-[90vw] max-h-[85vh] object-contain rounded-2xl shadow-2xl border-2 border-white/30" onclick="event.stopPropagation()">
+    <button class="arrow-pro" style="left: 20px;" onclick="event.stopPropagation(); navigateImage(1)"><i class="fas fa-chevron-left"></i></button>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toastMsg" class="toast-notify"><i class="fas fa-check-circle ml-2"></i> <span id="toastText"></span></div>
+
+  <footer class="footer-pro">
+    <div class="max-w-md mx-auto">
+      <i class="fas fa-crown text-amber-400"></i> 
+      <span id="footerCopyright" class="font-semibold">All Rights Reserved - @Bu-Xolthoum</span>
+    </div>
+  </footer>
+
+  <script>
+    // ------------------------------
+    // جميع الإعدادات مضمنة بشكل ثابت (بدون استيراد من ملف خارجي)
+    // ------------------------------
+    
+    // القيم الثابتة للتطبيق
+    const DEFAULT_CONFIG = {
+      accentColor: "#D63384",
+      brandName: "Bu-Xolthoum",
+      appName: "مدار السعادة - Intimacy",
+      appDescription: "تطبيق تفاعلي يهدف إلى إضافة عنصر المفاجأة والتجديد للحياة الزوجية، من خلال أدوات عشوائية محترمة. يحتوي على 'عجلة حظ' (SPIN) لاختيار أوضاع أو أنشطة متنوعة، و'وضع التحدي' الذي يسمح للزوجين باختيار وضعية معينة، و'ليلة رومانسية' تقدم 5 خيارات عشوائية مع مؤقت زمني لكل منها. كما يشمل 'وضع البطاقات' حيث يقوم أحد الشريكين باختيار بطاقة أو كشفها، وإعدادات متقدمة مثل 'وضع عدم التكرار' لتجنب تكرار نفس الخيارات، مع خيارات للصوت والاهتزاز الخفيف. التطبيق مصمم خصيصًا للمتزوجين، مع التركيز على الاحترام والخصوصية.",
+      aboutTitle: "نبذة عن التطبيق",
+      galleryTitle: "معاينة التطبيق",
+      socialSectionTitle: "تابعنا على منصات التواصل",
+      copyright: "All Rights Reserved - @Bu-Xolthoum",
+      downloadButtonText: "تحميل التطبيق",
+      toggleMoreText: "عرض المزيد",
+      toggleLessText: "عرض أقل",
+      toastDownloadStart: "جاري التحميل...",
+      toastDownloadSuccess: "✓ بدء تحميل التطبيق بنجاح! سيظهر الملف قريباً",
+      downloadUrl: "https://github.com/HatemAppStore/almaktab/releases/download/almaktab-1.1/apk.apk",
+      screenshotsFolder: "ScreenShots/",
+      screenshotCount: 10,
+      iconPath: "icon.png",
+      socialMedia: {
+        facebook: "https://facebook.com/",
+        twitter: "https://twitter.com/",
+        instagram: "https://instagram.com/",
+        telegram: "https://telegram.org/",
+        github: "https://github.com/"
+      }
+    };
+
+    // تعيين المتغيرات العامة
+    let downloadUrl = DEFAULT_CONFIG.downloadUrl;
+    let screenshotCount = DEFAULT_CONFIG.screenshotCount;
+    let screenshotsFolder = DEFAULT_CONFIG.screenshotsFolder;
+    let currentImageIndex = 0;
+    let screenshots = [];
+    let isDownloading = false;
+
+    // تطبيق اللون الأساسي
+    document.documentElement.style.setProperty('--accent-color', DEFAULT_CONFIG.accentColor);
+    document.documentElement.style.setProperty('--accent-color-dark', DEFAULT_CONFIG.accentColor);
+
+    // تحديث النصوص في DOM
+    document.title = `${DEFAULT_CONFIG.appName} | التطبيق القانوني المتكامل`;
+    document.getElementById('brandName').innerText = DEFAULT_CONFIG.brandName;
+    document.getElementById('appName').innerText = DEFAULT_CONFIG.appName;
+    document.getElementById('description').innerText = DEFAULT_CONFIG.appDescription;
+    document.getElementById('aboutTitle').innerText = DEFAULT_CONFIG.aboutTitle;
+    document.getElementById('galleryTitle').innerText = DEFAULT_CONFIG.galleryTitle;
+    document.getElementById('socialSectionTitle').innerHTML = `<i class="fas fa-globe"></i> ${DEFAULT_CONFIG.socialSectionTitle}`;
+    document.getElementById('footerCopyright').innerText = DEFAULT_CONFIG.copyright;
+    document.getElementById('downloadBtnText').innerText = DEFAULT_CONFIG.downloadButtonText;
+    
+    // إعدادات زر إظهار/إخفاء الوصف
+    const toggleSpan = document.getElementById('toggleBtnText');
+    if (toggleSpan) toggleSpan.innerText = DEFAULT_CONFIG.toggleMoreText;
+    window.toggleMoreText = DEFAULT_CONFIG.toggleMoreText;
+    window.toggleLessText = DEFAULT_CONFIG.toggleLessText;
+    
+    // رسائل التوست
+    window.toastDownloadStartMsg = DEFAULT_CONFIG.toastDownloadStart;
+    window.toastDownloadSuccessMsg = DEFAULT_CONFIG.toastDownloadSuccess;
+    
+    // تعيين أيقونة التطبيق
+    document.getElementById('appIcon').src = DEFAULT_CONFIG.iconPath;
+    
+    // بناء روابط التواصل الاجتماعي
+    function buildSocialLinks(socialItems) {
+      const socialContainer = document.getElementById('socialLinksContainer');
+      if (!socialContainer) return;
+      socialContainer.innerHTML = '';
+      
+      const defaultLinks = {
+        facebook: "https://facebook.com/",
+        twitter: "https://twitter.com/",
+        instagram: "https://instagram.com/",
+        telegram: "https://telegram.org/",
+        github: "https://github.com/",
+        privacyPolicyLink: "PrivacyPolicy.html"
+      };
+      
+      let items = (socialItems && typeof socialItems === 'object') ? socialItems : defaultLinks;
+      items.privacyPolicyLink = "PrivacyPolicy.html";
+      
+      const iconMap = {
+        facebook: { file: 'facebook.png', alt: 'Facebook', iconClass: 'fab fa-facebook' },
+        twitter: { file: 'twitter.png', alt: 'Twitter', iconClass: 'fab fa-twitter' },
+        instagram: { file: 'instagram.png', alt: 'Instagram', iconClass: 'fab fa-instagram' },
+        telegram: { file: 'telegram.png', alt: 'Telegram', iconClass: 'fab fa-telegram' },
+        github: { file: 'github.png', alt: 'GitHub', iconClass: 'fab fa-github' },
+        privacyPolicyLink: { file: 'PrivacyPolicy.png', alt: 'سياسة الخصوصية', iconClass: 'fas fa-lock' }
+      };
+      
+      let hasAnyLink = false;
+      for (const [key, url] of Object.entries(items)) {
+        if (key === 'privacyPolicyLink') {
+          hasAnyLink = true;
+          const iconInfo = iconMap[key];
+          const a = document.createElement('a');
+          a.href = "PrivacyPolicy.html";
+          a.className = 'social-icon-store';
+          a.setAttribute('aria-label', iconInfo.alt);
+          const img = document.createElement('img');
+          img.src = `SocialMedia/${iconInfo.file}`;
+          img.alt = iconInfo.alt;
+          img.loading = 'lazy';
+          img.style.width = '36px';
+          img.style.height = '36px';
+          img.onerror = function() {
+            this.onerror = null;
+            const fallbackIcon = document.createElement('i');
+            fallbackIcon.className = `${iconInfo.iconClass} text-3xl text-gray-600`;
+            this.parentNode.replaceChild(fallbackIcon, this);
+          };
+          a.appendChild(img);
+          socialContainer.appendChild(a);
+          continue;
+        }
+        
+        if (url && url !== "#" && url !== "") {
+          hasAnyLink = true;
+          const iconInfo = iconMap[key] || { file: 'default.png', alt: key, iconClass: 'fas fa-link' };
+          const a = document.createElement('a');
+          a.href = url;
+          a.target = '_blank';
+          a.className = 'social-icon-store';
+          a.setAttribute('aria-label', iconInfo.alt);
+          const img = document.createElement('img');
+          img.src = `SocialMedia/${iconInfo.file}`;
+          img.alt = iconInfo.alt;
+          img.loading = 'lazy';
+          img.style.width = '36px';
+          img.style.height = '36px';
+          img.onerror = function() {
+            this.onerror = null;
+            const fallbackIcon = document.createElement('i');
+            fallbackIcon.className = `${iconInfo.iconClass} text-3xl text-gray-600`;
+            this.parentNode.replaceChild(fallbackIcon, this);
+          };
+          a.appendChild(img);
+          socialContainer.appendChild(a);
+        }
+      }
+      
+      if (!hasAnyLink) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'text-gray-400 text-sm';
+        placeholder.innerText = 'لا توجد روابط تواصل اجتماعي حالياً';
+        socialContainer.appendChild(placeholder);
+      }
+    }
+    
+    buildSocialLinks(DEFAULT_CONFIG.socialMedia);
+    
+    // عداد التحميل
+    let downloadCount = parseInt(localStorage.getItem('almaktab_downloads') || '102');
+    function updateCounterDisplay() {
+      const displaySpan = document.getElementById('downloadCounterDisplay');
+      if(displaySpan) displaySpan.innerHTML = `تحميل +${downloadCount}`;
+    }
+    function incrementDownloadCounter() {
+      downloadCount++;
+      localStorage.setItem('almaktab_downloads', downloadCount);
+      updateCounterDisplay();
+    }
+    
+    // دوال التحميل
+    const downloadBtn = document.getElementById('downloadBtn');
+    const btnTextSpan = document.getElementById('downloadBtnText');
+    const progressWrapper = document.getElementById('progressWrapper');
+    const progressFill = document.getElementById('progressFill');
+    
+    function showToast(message) {
+      const toast = document.getElementById('toastMsg');
+      const toastTextSpan = document.getElementById('toastText');
+      toastTextSpan.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    
+    function simulateDownload() {
+      if(isDownloading) return;
+      isDownloading = true;
+      downloadBtn.disabled = true;
+      btnTextSpan.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> ${window.toastDownloadStartMsg || 'جاري التحميل...'}`;
+      progressWrapper.style.display = 'block';
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 15) + 5;
+        if(progress >= 100) {
+          clearInterval(interval);
+          progressFill.style.width = '100%';
+          triggerActualDownload();
+        } else {
+          progressFill.style.width = progress + '%';
+        }
+      }, 150);
+    }
+    
+    function triggerActualDownload() {
+      incrementDownloadCounter();
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = 'almaktab.apk';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast(window.toastDownloadSuccessMsg || '✓ بدء تحميل التطبيق بنجاح! سيظهر الملف قريباً');
+      setTimeout(() => resetDownloadButton(), 1500);
+    }
+    
+    function resetDownloadButton() {
+      isDownloading = false;
+      downloadBtn.disabled = false;
+      btnTextSpan.innerHTML = `<i class="fab fa-android text-xl"></i> ${DEFAULT_CONFIG.downloadButtonText}`;
+      progressWrapper.style.display = 'none';
+      progressFill.style.width = '0%';
+    }
+    
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if(!isDownloading) simulateDownload();
+    });
+    
+    // تحميل لقطات الشاشة
+    function loadScreenshots() {
+      const container = document.getElementById('screenshots-container');
+      if (!container) return;
+      container.innerHTML = '';
+      const extensions = ['png', 'jpg', 'jpeg'];
+      for (let i = 1; i <= screenshotCount; i++) {
+        tryLoadImage(i, extensions, 0, container);
+      }
+    }
+    
+    function tryLoadImage(number, extensions, extIndex, container) {
+      if (extIndex >= extensions.length) return;
+      const img = new Image();
+      const filePath = `${screenshotsFolder}screenshot${number}.${extensions[extIndex]}`;
+      img.onload = () => {
+        const idx = screenshots.length;
+        screenshots.push(filePath);
+        const screenshotDiv = document.createElement('img');
+        screenshotDiv.src = filePath;
+        screenshotDiv.loading = 'lazy';
+        screenshotDiv.dataset.index = idx;
+        screenshotDiv.className = 'screenshot-store flex-shrink-0';
+        screenshotDiv.style.scrollSnapAlign = 'start';
+        screenshotDiv.alt = `لقطة تطبيق ${number}`;
+        screenshotDiv.onclick = () => openLightbox(parseInt(screenshotDiv.dataset.index));
+        container.appendChild(screenshotDiv);
+      };
+      img.onerror = () => tryLoadImage(number, extensions, extIndex + 1, container);
+      img.src = filePath;
+    }
+    
+    function openLightbox(index) {
+      if (!screenshots.length) return;
+      if (index < 0) index = 0;
+      if (index >= screenshots.length) index = screenshots.length - 1;
+      currentImageIndex = index;
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      if (lightbox && lightboxImg) {
+        lightboxImg.src = screenshots[currentImageIndex];
+        lightbox.classList.remove('hidden');
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox) {
+        lightbox.classList.add('hidden');
+        lightbox.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    
+    function navigateImage(direction) {
+      if (!screenshots.length) return;
+      let newIndex = currentImageIndex + direction;
+      if (newIndex < 0) newIndex = 0;
+      if (newIndex >= screenshots.length) newIndex = screenshots.length - 1;
+      if (newIndex === currentImageIndex) return;
+      currentImageIndex = newIndex;
+      const lightboxImg = document.getElementById('lightbox-img');
+      if (lightboxImg) lightboxImg.src = screenshots[currentImageIndex];
+    }
+    
+    document.addEventListener('keydown', (e) => {
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox && lightbox.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') navigateImage(1);
+        else if (e.key === 'ArrowRight') navigateImage(-1);
+        else if (e.key === 'Escape') closeLightbox();
+      }
+    });
+    
+    function toggleDescription() {
+      const desc = document.getElementById('description');
+      const toggleSpan = document.getElementById('toggleBtnText');
+      if (desc.classList.contains('collapsed')) {
+        desc.classList.remove('collapsed');
+        desc.classList.add('expanded');
+        toggleSpan.innerText = window.toggleLessText || 'عرض أقل';
+      } else {
+        desc.classList.remove('expanded');
+        desc.classList.add('collapsed');
+        toggleSpan.innerText = window.toggleMoreText || 'عرض المزيد';
+      }
+    }
+    window.toggleDescription = toggleDescription;
+    document.getElementById('toggleBtn')?.addEventListener('click', toggleDescription);
+    
+    // بدء تحميل لقطات الشاشة عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', () => {
+      loadScreenshots();
+      setTimeout(() => {
+        const container = document.getElementById('screenshots-container');
+        if (container && container.children.length === 0) {
+          const placeholderMsg = document.createElement('div');
+          placeholderMsg.className = 'text-center text-gray-400 py-8 w-full';
+          placeholderMsg.innerHTML = '<i class="fas fa-image text-3xl mb-2 block"></i> لا توجد لقطات شاشة متاحة حالياً';
+          container.appendChild(placeholderMsg);
+        }
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
