@@ -31,9 +31,9 @@
 ## 📸 معاينة التطبيق :
 
 <p align="center">
-  <img src="ScreenShots/screenshot1.png" width="200"/>
-  <img src="ScreenShots/screenshot3.png" width="200"/>
-  <img src="ScreenShots/screenshot5.png" width="200"/>
+  <img src="ScreenShots/screenshot1.png" width="150"/>
+  <img src="ScreenShots/screenshot3.png" width="150"/>
+  <img src="ScreenShots/screenshot5.png" width="150"/>
 </p>
 
 
